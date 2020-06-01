@@ -1,0 +1,14 @@
+name: sha3
+description: A starting point for Dart libraries or applications.
+version: 0.1.0
+homepage: https://github.com/maoxs2/dart_sha3
+
+environment:
+  sdk: '>=2.8.1 <3.0.0'
+
+dependencies:
+
+dev_dependencies:
+  pedantic: ^1.9.0
+  test: ^1.14.4
+  hex: ^0.1.2
