@@ -1,9 +1,9 @@
-# Dart SHA3
+# SHA3 for Dart
 
-A sha3 library which contains sha3 keccak  for Dart developers.
+A SHA3 library which contains SHA3 keccak SHAKE CSHAKE KMAC for Dart developers.
 
-sha3 is translated from https://github.com/emn178/js-sha3
+SHA3 is translated from https://github.com/emn178/js-sha3
 
 ## Example
 
-Read [dartsha3_example.dart](./example/sha3_example.dart) and get datailed doc & examples
+Read [sha3_example.dart](./example/sha3_example.dart) or [pub.dev doc](https://pub.dev/documentation/sha3/latest/) and get datailed doc & examples

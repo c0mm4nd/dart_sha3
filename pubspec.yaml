@@ -1,6 +1,6 @@
 name: sha3
-description: A starting point for Dart libraries or applications.
-version: 0.1.0
+description: SHA3 for dart. It is unbelievable that such a language doesnt has such a basic library!
+version: 0.1.1
 homepage: https://github.com/maoxs2/dart_sha3
 
 environment:
