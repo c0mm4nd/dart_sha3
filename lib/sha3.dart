@@ -38,7 +38,7 @@ class SHA3 {
   int outputBlocks;
   int outputBits;
   int extraBytes;
-  int lastByteIndex;
+  int lastByteIndex = 0;
 
   SHA3(int bits, List<int> padding, int outputBits) {
     this.padding = padding;
