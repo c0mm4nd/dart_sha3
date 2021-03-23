@@ -26,30 +26,30 @@ const FINALIZE_ERROR = 'finalize already called';
 /// Avaliable `outputBits`:
 ///   same to `bits`;
 class SHA3 {
-  List<int> blocks;
-  List<int> s;
-  List<int> padding;
+  List<int>? blocks;
+  List<int>? s;
+  List<int>? padding;
   var reset = true;
   var finalized = false;
   var block = 0;
   var start = 0;
-  int blockCount;
-  int byteCount;
-  int outputBlocks;
-  int outputBits;
-  int extraBytes;
+  int? blockCount;
+  int? byteCount;
+  int? outputBlocks;
+  int? outputBits;
+  int? extraBytes;
   int lastByteIndex = 0;
 
   SHA3(int bits, List<int> padding, int outputBits) {
     this.padding = padding;
     this.outputBits = outputBits;
     blockCount = (1600 - (bits << 1)) >> 5;
-    byteCount = blockCount << 2;
+    byteCount = blockCount! << 2;
     outputBlocks = outputBits >> 5;
     extraBytes = (outputBits & 31) >> 3;
 
     s = List<int>.filled(50, 0, growable: true);
-    blocks = List<int>.filled(blockCount + 1, 0, growable: true);
+    blocks = List<int>.filled(blockCount! + 1, 0, growable: true);
   }
 
   // update inputs the ascii/utf8 encoded int array and return the class itself for next step
@@ -69,24 +69,24 @@ class SHA3 {
     while (index < length) {
       if (reset) {
         reset = false;
-        blocks[0] = block;
-        for (i = 1; i < blockCount + 1; ++i) {
+        blocks![0] = block;
+        for (i = 1; i < blockCount! + 1; ++i) {
           blocks[i] = 0;
         }
       }
 
       for (i = start; index < length && i < byteCount; ++index) {
-        blocks[i >> 2] |= message[index] << SHIFT[i++ & 3];
+        blocks![i >> 2] |= message[index] << SHIFT[i++ & 3];
       }
 
       lastByteIndex = i;
       if (i >= byteCount) {
         start = i - byteCount;
-        block = blocks[blockCount];
+        block = blocks![blockCount!];
         for (i = 0; i < blockCount; ++i) {
-          s[i] ^= blocks[i];
+          s![i] ^= blocks[i];
         }
-        f(s);
+        f(s!);
         reset = true;
       } else {
         start = i;
@@ -129,19 +129,19 @@ class SHA3 {
         blockCount = this.blockCount,
         s = this.s;
 
-    blocks[i >> 2] |= padding[i & 3];
+    blocks![i >> 2] |= padding![i & 3];
     if (lastByteIndex == byteCount) {
-      blocks[0] = blocks[blockCount];
+      blocks[0] = blocks[blockCount!];
       for (var i = 1; i < blockCount + 1; ++i) {
         blocks[i] = 0;
       }
     }
 
-    blocks[blockCount - 1] |= 0x80000000;
+    blocks[blockCount! - 1] |= 0x80000000;
     for (var i = 0; i < blockCount; ++i) {
-      s[i] ^= blocks[i];
+      s![i] ^= blocks[i];
     }
-    f(s);
+    f(s!);
   }
 
   // digest will sum and return a int list as hash
@@ -155,24 +155,24 @@ class SHA3 {
         i = 0,
         j = 0;
     var array =
-        List<int>.filled((outputBlocks << 2), 0); // final hash Uint8Array
+        List<int>.filled((outputBlocks! << 2), 0); // final hash Uint8Array
     var offset, block;
     while (j < outputBlocks) {
-      for (i = 0; i < blockCount && j < outputBlocks; ++i, ++j) {
+      for (i = 0; i < blockCount! && j < outputBlocks; ++i, ++j) {
         offset = j << 2;
-        block = s[i];
+        block = s![i];
         array[offset] = block & 0xFF;
         array[offset + 1] = (block >> 8) & 0xFF;
         array[offset + 2] = (block >> 16) & 0xFF;
         array[offset + 3] = (block >> 24) & 0xFF;
       }
       if (j % blockCount == 0) {
-        f(s);
+        f(s!);
       }
     }
-    if (extraBytes > 0) {
+    if (extraBytes! > 0) {
       offset = j << 2 & 0xFFFFFFFF;
-      block = s[i];
+      block = s![i];
       array[offset] = block & 0xFF;
       if (extraBytes > 1) {
         array[offset + 1] = (block >> 8) & 0xFF;
@@ -194,7 +194,7 @@ class KMAC extends SHA3 {
 
   @override
   void finalize() {
-    encode(outputBits, true);
+    encode(outputBits!, true);
     return super.finalize();
   }
 }
