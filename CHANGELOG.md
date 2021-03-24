@@ -1,5 +1,6 @@
-## 0.1.3
+## 0.2.0
 - nullsafety
+- set minimum sdk 2.12.0
 
 ## 0.1.2
 
